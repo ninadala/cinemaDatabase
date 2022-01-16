@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS cinema CHARACTER SET utf8mb4_general_ci;
+
