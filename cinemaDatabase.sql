@@ -28,7 +28,7 @@ CREATE TABLE cinema.Role (
     description TEXT(500)
 );
 
-CREATE TABLE cinema.Cinema (
+CREATE TABLE cinema.CinemaComplex (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(60) NOT NULL,
     address VARCHAR(255) NOT NULL,
@@ -39,8 +39,8 @@ CREATE TABLE cinema.Administrator (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     firstname VARCHAR(60) NOT NULL,
     lastname VARCHAR(60) NOT NULL,
-    cinema_id INT(255) NOT NULL,
-    FOREIGN KEY(cinema_id) REFERENCES Cinema(id)
+    cinema_complex_id INT(255) NOT NULL,
+    FOREIGN KEY(cinema_complex_id) REFERENCES CinemaComplex(id)
 );
 
 CREATE TABLE cinema.Get (
@@ -58,5 +58,8 @@ CREATE TABLE cinema.Rate (
 );
 
 CREATE TABLE cinema.Room (
-    
+    id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    seat_number INT(20) NOT NULL,
+    cinema_complex_id INT(255) NOT NULL,
+    FOREIGN KEY (cinema_complex_id) REFERENCES CinemaComplex(id)
 );
