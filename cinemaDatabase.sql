@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS cinema CHARACTER SET utf8mb4;
+CREATE DATABASE cinema CHARACTER SET utf8mb4;
 
 CREATE TABLE cinema.Users (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -62,4 +62,53 @@ CREATE TABLE cinema.Room (
     seat_number INT(20) NOT NULL,
     cinema_complex_id INT(255) NOT NULL,
     FOREIGN KEY (cinema_complex_id) REFERENCES CinemaComplex(id)
+);
+
+CREATE TABLE cinema.MovieDirector (
+    id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    lastname VARCHAR(60) NOT NULL,
+    firstname VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE cinema.Movie (
+    id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    title VARCHAR(60) NOT NULL,
+    year INT(4) NOT NULL,
+    movie_director_id INT(255) NOT NULL,
+    FOREIGN KEY (movie_director_id) REFERENCES MovieDirector(id)
+);
+
+CREATE TABLE cinema.Session (
+    id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    date DATETIME NOT NULL,
+    room_id INT(255) NOT NULL,
+    movie_id INT(255) NOT NULL,
+    FOREIGN KEY (room_id) REFERENCES Room(id),
+    FOREIGN KEY (movie_id)REFERENCES Movie(id)
+);
+
+CREATE TABLE cinema.Ticket (
+    id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    user_id INT(255) NOT NULL,
+    session_id INT(255) NOT NULL,
+    rate_id INT(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (session_id) REFERENCES Session(id),
+    FOREIGN KEY (rate_id) REFERENCES Rate(id)
+);
+
+CREATE TABLE cinema.CrudRate (
+    administrator_id INT(255) NOT NULL,
+    rate_id INT(255) NOT NULL,
+    PRIMARY KEY (administrator_id, rate_id),
+    FOREIGN KEY (administrator_id) REFERENCES Administrator(id),
+    FOREIGN KEY (rate_id) REFERENCES Rate(id)
+);
+
+CREATE TABLE cinema.CrudSession (
+    administrator_id INT(255) NOT NULL,
+    session_id INT(255) NOT NULL,
+    PRIMARY KEY (administrator_id, session_id),
+    FOREIGN KEY (administrator_id) REFERENCES Administrator(id),
+    FOREIGN KEY (session_id) REFERENCES Session(id)
 );
