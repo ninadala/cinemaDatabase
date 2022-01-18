@@ -34,13 +34,14 @@ CREATE TABLE cinema.Administrator (
     firstname VARCHAR(60) NOT NULL,
     lastname VARCHAR(60) NOT NULL,
     permission VARCHAR(30) NOT NULL,
-    cinema_complex_id INT(255) NOT NULL,
+    cinema_complex_id INT(255),
     FOREIGN KEY(cinema_complex_id) REFERENCES CinemaComplex(id)
 );
 
 CREATE TABLE cinema.Rate (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     title VARCHAR(60) NOT NULL,
+    price DECIMAL(4,2),
     description TEXT(500) NOT NULL
 );
 
@@ -123,3 +124,52 @@ INSERT INTO cinema.Pay (user_id, paiement_mode_id) VALUES (6, 1);
 INSERT INTO cinema.Pay (user_id, paiement_mode_id) VALUES (7, 1);
 INSERT INTO cinema.Pay (user_id, paiement_mode_id) VALUES (8, 1);
 INSERT INTO cinema.Pay (user_id, paiement_mode_id) VALUES (10, 2);
+
+INSERT INTO cinema.CinemaComplex (id, name, address, city_code) VALUES (1, "Eldorado", "rue d'Auxonne", 21000);
+INSERT INTO cinema.CinemaComplex (id, name, address, city_code) VALUES (2, "Darcy", "place Darcy", 21000);
+INSERT INTO cinema.CinemaComplex (id, name, address, city_code) VALUES (3, "Jaude", "rue Allagnat", 63000);
+INSERT INTO cinema.CinemaComplex (id, name, address, city_code) VALUES (4, "Slalom", "rue de la glisse", 38860);
+INSERT INTO cinema.CinemaComplex (id, name, address, city_code) VALUES (5, "Nef", "bd Edouard Rey", 38000);
+
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (1, 'Sally', 'Brimner', 'Complex Manager', 1);
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (2, 'Roch', 'Ozelton', 'Complex Manager', 2);
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (3, 'Tedi', 'Pedron', 'Complex Manager', 3);
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (4, 'Veronique', 'Gravey', 'Complex Manager', 4);
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (5, 'Ardys', 'Maleney', 'Sale Manager', 2);
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission) VALUES (6, 'Cayla', 'Phelipeau', 'National Supervisor');
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission) VALUES (7, 'Sylvester', 'Banner', 'Regional Supervisor');
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (8, 'Julius', 'Reiner', 'Sale Manager', 1);
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (9, 'Cookie', 'Castilla', 'Sale Manager', 3);
+INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (10, 'Kingston', 'Fabry', 'Sale Manager', 4);
+
+INSERT INTO cinema.Rate (id, title, price, description) VALUES (1, "plein", 09.20, "tarif standard");
+INSERT INTO cinema.Rate (id, title, price, description) VALUES (2, "étudiant", 07.60, "tarif étudiant");
+INSERT INTO cinema.Rate (id, title, price, description) VALUES (3, "enfant", 05.90, "tarif enfants de moins de 14 ans");
+
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (1, 50, 1);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (2, 25, 1);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (3, 100, 2);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (4, 50, 2);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (5, 300, 3);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (6, 50, 3);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (7, 25, 4);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (8, 15, 4);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (9, 30, 1);
+INSERT INTO cinema.Room (id, seat_number, cinema_complex_id) VALUES (10, 45, 5);
+
+INSERT INTO cinema.MovieDirector (id, lastname, firstname) VALUES (1, "Steven", "Spielberg");
+INSERT INTO cinema.MovieDirector (id, lastname, firstname) VALUES (2, "Terrence", "Malick");
+INSERT INTO cinema.MovieDirector (id, lastname, firstname) VALUES (3, "Lana & Lilly", "Wachowski");
+INSERT INTO cinema.MovieDirector (id, lastname, firstname) VALUES (4, "Clint", "Eastwood");
+INSERT INTO cinema.MovieDirector (id, lastname, firstname) VALUES (5, "George", "Lucas");
+
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (1, "Star Wars", 1977, 5);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (2, "Indiana Jones et le Temple Maudit", 1984, 1);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (3, "Pentagon Papers", 2017, 1);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (4, "Jurassic Park", 1993, 1);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (5, "Matrix", 1999, 3);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (6, "Matrix Ressurections", 2021, 3);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (7, "The tree of life", 2011, 2);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (8, "Mystic River", 2003, 4);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (9, "Million dollard baby", 2005, 4);
+INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (10, "Gran Torino", 2008, 4);
