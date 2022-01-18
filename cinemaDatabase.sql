@@ -173,3 +173,25 @@ INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (7, "The tr
 INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (8, "Mystic River", 2003, 4);
 INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (9, "Million dollard baby", 2005, 4);
 INSERT INTO cinema.Movie (id, title, year, movie_director_id) VALUES (10, "Gran Torino", 2008, 4);
+
+INSERT INTO cinema.Session (id, date, room_id, movie_id) VALUES (1, '2021-01-19 10:00:00', 2, 1);
+INSERT INTO cinema.Session (id, date, room_id, movie_id) VALUES (2, '2021-01-19 10:00:00', 1, 5);
+INSERT INTO cinema.Session (id, date, room_id, movie_id) VALUES (3, '2021-01-19 10:00:00', 3, 1);
+INSERT INTO cinema.Session (id, date, room_id, movie_id) VALUES (4, '2021-01-19 10:00:00', 4, 2);
+INSERT INTO cinema.Session (id, date, room_id, movie_id) VALUES (5, '2021-01-19 10:00:00', 5, 1);
+
+INSERT INTO cinema.Ticket (id, user_id, session_id, rate_id) VALUES (1, 1, 3, 1);
+INSERT INTO cinema.Ticket (id, user_id, session_id, rate_id) VALUES (2, 2, 3, 1);
+INSERT INTO cinema.Ticket (id, user_id, session_id, rate_id) VALUES (3, 3, 3, 3);
+INSERT INTO cinema.Ticket (id, user_id, session_id, rate_id) VALUES (4, 4, 5, 2);
+INSERT INTO cinema.Ticket (id, user_id, session_id, rate_id) VALUES (5, 5, 5, 2);
+
+INSERT INTO cinema.CrudRate (administrator_id, rate_id) VALUES (7, 1);
+INSERT INTO cinema.CrudRate (administrator_id, rate_id) VALUES (7, 2);
+INSERT INTO cinema.CrudRate (administrator_id, rate_id) VALUES (7, 3);
+INSERT INTO cinema.CrudRate (administrator_id, rate_id) VALUES (6, 1);
+INSERT INTO cinema.CrudRate (administrator_id, rate_id) VALUES (6, 2);
+
+INSERT INTO cinema.CrudSession (administrator_id, session_id) VALUES (1, 1);
+INSERT INTO cinema.CrudSession (administrator_id, session_id) VALUES (2, 3);
+INSERT INTO cinema.CrudSession (administrator_id, session_id) VALUES (3, 5);
