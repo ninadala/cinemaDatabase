@@ -229,3 +229,5 @@ CREATE USER 'readerDatabase'@'localhost' IDENTIFIED BY 'youReallyNeedToChangeThi
 GRANT ALL PRIVILEGES ON cinema.* TO 'adminDatabase'@'localhost';
 GRANT SELECT ON cinema.* TO 'readerDatabase'@'localhost';
 
+-- ligne de commande ci-dessous à taper dans le terminal pour exporter la base de donnée --
+mysql -h localhost -u root cinema > cinema.sql
