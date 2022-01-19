@@ -6,13 +6,13 @@ CREATE TABLE cinema.Users (
     lastname VARCHAR(60) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.PaiementMode (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     title VARCHAR(60) NOT NULL,
     description TEXT(255)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.Pay (
     user_id INT(255) NOT NULL,
@@ -20,43 +20,42 @@ CREATE TABLE cinema.Pay (
     PRIMARY KEY(user_id, paiement_mode_id),
     FOREIGN KEY(user_id) REFERENCES Users(id),
     FOREIGN KEY(paiement_mode_id) REFERENCES PaiementMode(id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.CinemaComplex (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(60) NOT NULL,
     address VARCHAR(255) NOT NULL,
     city_code INT(5)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.Administrator (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     firstname VARCHAR(60) NOT NULL,
     lastname VARCHAR(60) NOT NULL,
-    permission VARCHAR(30) NOT NULL,
     cinema_complex_id INT(255),
     FOREIGN KEY(cinema_complex_id) REFERENCES CinemaComplex(id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.Rate (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     title VARCHAR(60) NOT NULL,
     price DECIMAL(4,2),
     description TEXT(500) NOT NULL
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.Room (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     seat_number INT(20) NOT NULL,
     cinema_complex_id INT(255) NOT NULL,
     FOREIGN KEY (cinema_complex_id) REFERENCES CinemaComplex(id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.MovieDirector (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     lastname VARCHAR(60) NOT NULL,
     firstname VARCHAR(60) NOT NULL
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.Movie (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -64,7 +63,7 @@ CREATE TABLE cinema.Movie (
     year INT(4) NOT NULL,
     movie_director_id INT(255) NOT NULL,
     FOREIGN KEY (movie_director_id) REFERENCES MovieDirector(id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.Session (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -73,7 +72,7 @@ CREATE TABLE cinema.Session (
     movie_id INT(255) NOT NULL,
     FOREIGN KEY (room_id) REFERENCES Room(id),
     FOREIGN KEY (movie_id)REFERENCES Movie(id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.Ticket (
     id INT(255) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -83,7 +82,7 @@ CREATE TABLE cinema.Ticket (
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (session_id) REFERENCES Session(id),
     FOREIGN KEY (rate_id) REFERENCES Rate(id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.CrudRate (
     administrator_id INT(255) NOT NULL,
@@ -91,7 +90,7 @@ CREATE TABLE cinema.CrudRate (
     PRIMARY KEY (administrator_id, rate_id),
     FOREIGN KEY (administrator_id) REFERENCES Administrator(id),
     FOREIGN KEY (rate_id) REFERENCES Rate(id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE cinema.CrudSession (
     administrator_id INT(255) NOT NULL,
@@ -99,7 +98,21 @@ CREATE TABLE cinema.CrudSession (
     PRIMARY KEY (administrator_id, session_id),
     FOREIGN KEY (administrator_id) REFERENCES Administrator(id),
     FOREIGN KEY (session_id) REFERENCES Session(id)
-);
+) ENGINE = InnoDB;
+
+CREATE TABLE cinema.Roles (
+    id INT(5) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    title VARCHAR(60) NOT NULL,
+    description TEXT(500) NOT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE cinema.AdminRoles (
+    administrator_id INT(255) NOT NULL,
+    role_id INT(255) NOT NULL,
+    PRIMARY KEY (administrator_id, role_id),
+    FOREIGN KEY (administrator_id) REFERENCES Administrator(id),
+    FOREIGN KEY (role_id) REFERENCES Roles(id)
+) ENGINE = InnoDB;
 
 INSERT INTO cinema.Users (id, firstname, lastname, email, password) VALUES (1, 'Vernor', 'Da Costa', 'vdacosta0@tuttocitta.it', '$2y$10$CRDhDrzQwBUgbmLTxyOfcOiny1rvS45PD2nUlCJkLA6DglqHuYrG6');
 INSERT INTO cinema.Users (id, firstname, lastname, email, password) VALUES (2, 'Clo', 'Dumingo', 'cdumingo1@businesswire.com', '$2y$10$lgB/g7fYVa2qITi9lMhaxube5Wo3xNHKYo5ouRvseGZIz6Csb3Iq2');
@@ -131,16 +144,16 @@ INSERT INTO cinema.CinemaComplex (id, name, address, city_code) VALUES (3, "Jaud
 INSERT INTO cinema.CinemaComplex (id, name, address, city_code) VALUES (4, "Slalom", "rue de la glisse", 38860);
 INSERT INTO cinema.CinemaComplex (id, name, address, city_code) VALUES (5, "Nef", "bd Edouard Rey", 38000);
 
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (1, 'Sally', 'Brimner', 'Complex Manager', 1);
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (2, 'Roch', 'Ozelton', 'Complex Manager', 2);
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (3, 'Tedi', 'Pedron', 'Complex Manager', 3);
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (4, 'Veronique', 'Gravey', 'Complex Manager', 4);
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (5, 'Ardys', 'Maleney', 'Sale Manager', 2);
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission) VALUES (6, 'Cayla', 'Phelipeau', 'National Supervisor');
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission) VALUES (7, 'Sylvester', 'Banner', 'Regional Supervisor');
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (8, 'Julius', 'Reiner', 'Sale Manager', 1);
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (9, 'Cookie', 'Castilla', 'Sale Manager', 3);
-INSERT INTO cinema.Administrator (id, firstname, lastname, permission, cinema_complex_id) VALUES (10, 'Kingston', 'Fabry', 'Sale Manager', 4);
+INSERT INTO cinema.Administrator (id, firstname, lastname, cinema_complex_id) VALUES (1, 'Sally', 'Brimner', 1);
+INSERT INTO cinema.Administrator (id, firstname, lastname, cinema_complex_id) VALUES (2, 'Roch', 'Ozelton', 2);
+INSERT INTO cinema.Administrator (id, firstname, lastname, cinema_complex_id) VALUES (3, 'Tedi', 'Pedron', 3);
+INSERT INTO cinema.Administrator (id, firstname, lastname, cinema_complex_id) VALUES (4, 'Veronique', 'Gravey', 4);
+INSERT INTO cinema.Administrator (id, firstname, lastname, cinema_complex_id) VALUES (5, 'Ardys', 'Maleney', 2);
+INSERT INTO cinema.Administrator (id, firstname, lastname) VALUES (6, 'Cayla', 'Phelipeau');
+INSERT INTO cinema.Administrator (id, firstname, lastname) VALUES (7, 'Sylvester', 'Banner');
+INSERT INTO cinema.Administrator (id, firstname, lastname, cinema_complex_id) VALUES (8, 'Julius', 'Reiner', 1);
+INSERT INTO cinema.Administrator (id, firstname, lastname, cinema_complex_id) VALUES (9, 'Cookie', 'Castilla', 3);
+INSERT INTO cinema.Administrator (id, firstname, lastname, cinema_complex_id) VALUES (10, 'Kingston', 'Fabry', 4);
 
 INSERT INTO cinema.Rate (id, title, price, description) VALUES (1, "plein", 09.20, "tarif standard");
 INSERT INTO cinema.Rate (id, title, price, description) VALUES (2, "étudiant", 07.60, "tarif étudiant");
@@ -195,3 +208,24 @@ INSERT INTO cinema.CrudRate (administrator_id, rate_id) VALUES (6, 2);
 INSERT INTO cinema.CrudSession (administrator_id, session_id) VALUES (1, 1);
 INSERT INTO cinema.CrudSession (administrator_id, session_id) VALUES (2, 3);
 INSERT INTO cinema.CrudSession (administrator_id, session_id) VALUES (3, 5);
+
+INSERT INTO cinema.Roles (id, title, description) VALUES (1, 'Complex Manager', 'authorisation or CRUD Session');
+INSERT INTO cinema.Roles (id, title, description) VALUES (2, 'Sale Manager', 'authorisation for CRUD Rate');
+INSERT INTO cinema.Roles (id, title, description) VALUES (3, 'Regional Supervisor', 'authorisation for CRUD Rate and Session');
+
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (1, 1);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (2, 1);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (3, 1);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (4, 2);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (5, 2);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (6, 3);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (7, 3);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (8, 2);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (9, 2);
+INSERT INTO cinema.AdminRoles (administrator_id, role_id) VALUES (10, 2);
+
+CREATE USER 'adminDatabase'@'localhost' IDENTIFIED BY 'changeYourPassword';
+CREATE USER 'readerDatabase'@'localhost' IDENTIFIED BY 'youReallyNeedToChangeThisPassword';
+GRANT ALL PRIVILEGES ON cinema.* TO 'adminDatabase'@'localhost';
+GRANT SELECT ON cinema.* TO 'readerDatabase'@'localhost';
+
